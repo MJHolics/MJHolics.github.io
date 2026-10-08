@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0f14">
+<title>지민종 — 눌러 볼 수 있는 것 네 가지</title>
+<meta name="description" content="졸음 감지, 찍어서 가르치는 검사기, AI 서버 관제탑, 돌려 보는 라이다. 설치 없이 지금 이 브라우저에서 돕니다.">
+<meta property="og:title" content="지민종 — 눌러 볼 수 있는 것 네 가지">
+<meta property="og:description" content="졸음 감지 · 찍어서 가르치는 검사기 · AI 서버 관제탑 · 돌려 보는 라이다. 설치 없이 브라우저에서 돕니다.">
+<meta property="og:image" content="https://mjholics.github.io/media/lidar.jpg">
+<style>
+  :root { --bg: #0b0f14; --panel: #131a22; --line: #243140; --text: #e8eef5; --dim: #8b9bb0; --accent: #5bc0ff; --ok: #2fbf71; }
+  * { box-sizing: border-box; }
+  body { word-break: keep-all; overflow-wrap: anywhere; }
+  html, body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Pretendard", "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif; }
+  body { padding: 20px 16px 48px; }
+  main { max-width: 1080px; margin: 0 auto; }
+  a { color: var(--accent); }
+  header { margin: 6px 0 22px; }
+  header .who { color: var(--dim); font-size: 14px; margin: 0 0 6px; }
+  header h1 { font-size: clamp(26px, 5.4vw, 42px); line-height: 1.2; letter-spacing: -0.025em; margin: 0 0 10px; text-wrap: balance; }
+  header p { color: var(--dim); font-size: 15.5px; line-height: 1.6; margin: 0; max-width: 62ch; }
+  header p b { color: var(--text); }
+
+  .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  @media (max-width: 860px) { .cards { grid-template-columns: minmax(0, 1fr); } }
+  article { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+    display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); }
+  .shot { position: relative; display: block; background: #05080b; min-height: 320px; border-right: 1px solid var(--line); }
+  .shot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .shot em { position: absolute; left: 8px; bottom: 8px; font-style: normal; font-size: 11px; color: var(--dim);
+    background: rgba(11, 15, 20, .8); border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; }
+  .body { padding: 14px 14px 14px; display: flex; flex-direction: column; min-width: 0; }
+  .tagline { color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: .02em; margin: 0 0 4px; }
+  h2 { font-size: clamp(18px, 3.4vw, 22px); letter-spacing: -0.02em; margin: 0 0 8px; }
+  .body p { margin: 0 0 8px; font-size: 13.5px; line-height: 1.55; color: var(--dim); }
+  .body p b { color: var(--text); font-weight: 600; }
+  ul { margin: 2px 0 10px; padding: 0; list-style: none; font-size: 12.5px; line-height: 1.5; color: var(--dim); }
+  li { padding-left: 12px; position: relative; margin-top: 4px; }
+  li::before { content: ""; position: absolute; left: 0; top: .62em; width: 5px; height: 5px; border-radius: 50%; background: var(--ok); }
+  li b { color: var(--text); font-variant-numeric: tabular-nums; }
+  .stack { font-size: 11.5px; color: var(--dim); margin: 0 0 12px; }
+  .go { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .go a.open { background: var(--accent); color: #04121c; font-weight: 700; text-decoration: none; padding: 10px 14px; border-radius: 10px; font-size: 14px; }
+  .go a.code { font-size: 13px; }
+  @media (max-width: 420px) { .body { padding: 12px 11px; } .body p { font-size: 13px; } }
+
+  .more { margin-top: 22px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+  .more h2 { font-size: 15px; margin: 0 0 10px; }
+  .more table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .more td { padding: 8px 6px; border-top: 1px solid var(--line); vertical-align: top; line-height: 1.5; color: var(--dim); }
+  .more td:first-child { white-space: nowrap; color: var(--text); font-weight: 600; padding-right: 14px; }
+  .more td b { color: var(--text); font-variant-numeric: tabular-nums; }
+  @media (max-width: 560px) { .more td, .more td:first-child { display: block; white-space: normal; border-top: 0; padding: 0 0 2px; } .more tr { display: block; padding: 9px 0; border-top: 1px solid var(--line); } }
+  footer { margin-top: 22px; color: var(--dim); font-size: 13.5px; line-height: 1.7; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="who">지민종 · AI 엔지니어 · 의료기기 연구원(임베디드 C, ISO 13485)에서 AI로</p>
+    <h1>설명보다 먼저, 눌러 볼 수 있는 것 네 가지</h1>
+    <p>설치도 로그인도 없습니다. <b>계산은 서버가 아니라 지금 보고 계신 기기에서</b> 돕니다.
+      모델과 C++ 코드를 브라우저로 옮기고, 옮긴 것이 원본과 <b>같은 답을 내는지부터 대조</b>했습니다. 휴대폰에서도 열립니다.</p>
+  </header>
+
+  <div class="cards">
+    <article>
+      <a class="shot" href="https://mjholics.github.io/vlm-defect-inspector/" aria-label="찍어서 가르치는 검사기 열기">
+        <video muted loop playsinline preload="none" poster="media/inspector.jpg" src="media/inspector.mp4"></video><em>화면 녹화</em></a>
+      <div class="body">
+        <p class="tagline">제조 · 부품이 자주 바뀌는 작업대</p>
+        <h2>찍어서 가르치는 검사기</h2>
+        <p>멀쩡한 것 <b>5장</b>만 보여 주면 다음 물건에서 <b>다른 곳</b>을 짚고, 그 결과로 검사 성적서 한 장을 만듭니다. 결함 사진도 학습도 필요 없습니다.</p>
+        <ul>
+          <li>처음 보는 물건 10종에서 다른 곳을 맞게 짚은 비율 <b>0.80 · 0.87</b>(모델 2종)</li>
+          <li>못 하는 것도 쟀습니다 — 돌아가는 나사는 5장으로 <b>판정 불가</b>(AUROC 0.51)</li>
+          <li>브라우저와 파이썬 판정 <b>6/6</b> 일치</li>
+        </ul>
+        <p class="stack">패치 특징 최근접 거리 · ONNX Runtime Web · WebGPU · 음성</p>
+        <div class="go"><a class="open" href="https://mjholics.github.io/vlm-defect-inspector/">열어 보기</a><a class="code" href="https://github.com/MJHolics/vlm-defect-inspector">코드</a></div>
+      </div>
+    </article>
+
+    <article>
+      <a class="shot" href="https://mjholics.github.io/dms-agent/" aria-label="졸음 감지 열기">
+        <video muted loop playsinline preload="none" poster="media/dms.jpg" src="media/dms.mp4"></video><em>화면 녹화</em></a>
+      <div class="body">
+        <p class="tagline">모빌리티 · 화물차 · 지게차 · 크레인</p>
+        <h2>졸음 감지</h2>
+        <p>카메라를 켜고 <b>눈을 2초 감으면 경보</b>가 울립니다. 눈 감김·하품·한눈팔기를 따로 재고, 겹치면 단계를 올립니다. 얼굴 영상은 기기 밖으로 나가지 않습니다.</p>
+        <ul>
+          <li>신호 하나만 볼 때 놓친 경보 <b>60% → 0.4%</b>(신호를 합쳐 판단)</li>
+          <li>파이썬 원본과 브라우저 판단 <b>4,228프레임</b> 일치</li>
+          <li>옮기다 원본의 각도·입 벌림 계산 결함 <b>2건</b>을 찾아 수정</li>
+        </ul>
+        <p class="stack">MediaPipe 얼굴 랜드마크 · 시간 기준 판단 규칙 · PostgreSQL 경보 기록</p>
+        <div class="go"><a class="open" href="https://mjholics.github.io/dms-agent/">열어 보기</a><a class="code" href="https://github.com/MJHolics/dms-agent">코드</a></div>
+      </div>
+    </article>
+
+    <article>
+      <a class="shot" href="https://mjholics.github.io/llm-serving-rca/" aria-label="AI 서버 관제탑 열기">
+        <video muted loop playsinline preload="none" poster="media/tower.jpg" src="media/tower.mp4"></video><em>화면 녹화</em></a>
+      <div class="body">
+        <p class="tagline">LLM 운영 · 사내 추론 서버</p>
+        <h2>AI 서버 관제탑</h2>
+        <p>실제 LLM 서버에 장애 다섯 가지를 넣어 잰 <b>41분 기록</b>을 재생합니다. 「장애 주입」을 누르면 탐지와 원인 판정을 브라우저가 기록 위에서 다시 계산합니다.</p>
+        <ul>
+          <li>장애 20건 탐지 <b>20/20</b>, 원인 판정 규칙 고친 뒤 <b>0.80 → 1.00</b></li>
+          <li>GPU 경합은 GPU 사용률로는 <b>안 보이고</b> 토큰 간격 2.9배로 잡힘</li>
+          <li>파이썬과 브라우저 탐지 시각·판정 <b>20/20</b> 일치</li>
+        </ul>
+        <p class="stack">vLLM · IsolationForest · 서버 지표 1초 수집 · 원인 판정 규칙</p>
+        <div class="go"><a class="open" href="https://mjholics.github.io/llm-serving-rca/">열어 보기</a><a class="code" href="https://github.com/MJHolics/llm-serving-rca">코드</a></div>
+      </div>
+    </article>
+
+    <article>
+      <a class="shot" href="https://mjholics.github.io/lidar-edge-accel/" aria-label="돌려 보는 라이다 열기">
+        <video muted loop playsinline preload="none" poster="media/lidar.jpg" src="media/lidar.mp4"></video><em>화면 녹화</em></a>
+      <div class="body">
+        <p class="tagline">자율주행 · 로봇 · C++</p>
+        <h2>돌려 보는 라이다</h2>
+        <p>독일 카를스루에 도로에서 찍은 <b>12만 점</b>을 손으로 돌려 봅니다. 점을 바닥과 물체로 나누는 <b>C++ 코드가 브라우저 안에서</b> 매 장면 다시 돕니다.</p>
+        <ul>
+          <li>같은 계산을 C++ 직렬·OpenMP·CUDA로 구현, GPU <b>5.55 → 0.70ms</b></li>
+          <li>브라우저(WASM)와 PC 결과 <b>120/120</b> 항목 일치</li>
+          <li>무작위만 바꿔도 물체 수가 <b>51덩이</b> 폭으로 흔들림 — 화면에서 직접 확인</li>
+        </ul>
+        <p class="stack">C++17 · CUDA 커널 · OpenMP · WebAssembly · WebGL</p>
+        <div class="go"><a class="open" href="https://mjholics.github.io/lidar-edge-accel/">열어 보기</a><a class="code" href="https://github.com/MJHolics/lidar-edge-accel">코드</a></div>
+      </div>
+    </article>
+  </div>
+
+  <section class="more">
+    <h2>화면은 없지만 수치로 남긴 것</h2>
+    <table>
+      <tr><td><a href="https://github.com/MJHolics/vlm-defect-inspector">금속 결함 검사 모델</a></td><td>학습 없이 <b>33.7%</b> → 미세조정과 교정 루프 뒤 <b>98.9%</b>. 더 높은 99.3% 후보는 검증 기준에 걸려 버렸습니다. 엣지용 CNN은 CPU에서 수 ms.</td></tr>
+      <tr><td><a href="https://github.com/MJHolics/vllm-serving-bench">LLM 추론 서버</a></td><td>vLLM 동시 처리 <b>6,284 tok/s</b>. Triton을 얹으면 동시 16 이하에서는 이득, 32 이상에서는 최대 <b>38.7%</b> 손해.</td></tr>
+      <tr><td><a href="https://github.com/MJHolics/vla-edge-policy">로봇 제어 모델</a></td><td>성공률과 지연의 맞바꿈을 통계 검정(p=0.018)으로 확인하고, 지연이 두 봉우리로 갈리는 원인을 GPU 커널 제출 경로까지 추적했습니다.</td></tr>
+      <tr><td><a href="https://github.com/MJHolics/demand-forecasting-gbm">수요 예측</a></td><td>합성 데이터에서 이긴 모델이 실제 데이터에서는 단순 기준선에 졌고(7.20 대 3.27), 원인을 찾아 <b>40%</b> 줄였습니다.</td></tr>
+    </table>
+  </section>
+
+  <footer>
+    <a href="https://github.com/MJHolics">github.com/MJHolics</a> · <a href="mailto:wlalswhd369@naver.com">wlalswhd369@naver.com</a><br>
+    각 화면의 첫 줄에 무엇이 재생이고 무엇이 지금 계산되는 값인지 적어 두었습니다.
+  </footer>
+</main>
+<script>
+  // 보이는 카드만 재생한다(데이터·배터리).
+  const io = new IntersectionObserver((es) => es.forEach((e) => { const v = e.target; e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }), { threshold: 0.35 });
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.querySelectorAll('video').forEach((v) => io.observe(v));
+</script>
+</body>
+</html>
